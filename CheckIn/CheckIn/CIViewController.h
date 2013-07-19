@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface CIViewController : UIViewController <CLLocationManagerDelegate> {
-    NSArray *locationArray;
+@interface CIViewController : UIViewController <CLLocationManagerDelegate, UITableViewDelegate> {
+    NSArray *cellContent;
 }
-
--(IBAction)searchPlace:(id)sender;
 
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+
+-(void) nearbyWithLatitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees) lng;
 
 @end

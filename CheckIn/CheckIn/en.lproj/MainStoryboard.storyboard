@@ -58,6 +58,7 @@
                     <tabBarItem key="tabBarItem" title="checkin" id="pbX-Q6-xj9"/>
                     <connections>
                         <outlet property="mapView" destination="BL2-Tg-384" id="HYp-SU-Uwj"/>
+                        <outlet property="tableView" destination="COg-6a-bUD" id="DlM-2k-ema"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gOf-Lu-b5w" userLabel="First Responder" sceneMemberID="firstResponder"/>

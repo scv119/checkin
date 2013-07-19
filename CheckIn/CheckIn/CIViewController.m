@@ -7,8 +7,8 @@
 //
 
 #import "CIViewController.h"
-#import "AFHTTPClient.h"
-#import "AFHTTPRequestOperation.h"
+#import "AFJSONRequestOperation.h"
+
 
 @interface CIViewController ()
 
@@ -37,14 +37,52 @@
     
     CLLocation *location = [locations lastObject];
     NSLog(@"location updated %@", [location description]);
+    [self nearbyWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
     MKCoordinateRegion region=MKCoordinateRegionMakeWithDistance(location.coordinate,1000 ,1000 );
     [self.mapView setRegion:region animated:TRUE];
     
-    NSString *url = @"https://maps.googleapis.com/maps/api/place/search/json?location=-33.8670522,151.1957362&rankby=distance&types=food&name=harbour&language=zh-CN&sensor=false&key=AIzaSyDLtz4_hWO-iGpy5RT8SxZi-YcZTZYTVXY";
+}
+
+-(void) nearbyWithLatitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees) lng
+{
+    NSString *str = [[NSString alloc] initWithFormat:@"http://10.18.93.158:8888/nearby?lat=%f&lng=%f", lat, lng];\
+    NSLog(@"nearby start! %@", str);
+    NSURL *url = [NSURL URLWithString:str];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        NSLog(@"nearby Success!");
+        NSArray *array = (NSArray *)JSON;
+        int size = 0;
+        for (id item in array) {
+            NSDictionary *poi = (NSDictionary *)item;
+
+            NSLog(@"%@", [poi objectForKey:@"lat"]);
+            NSLog(@"%@", [poi objectForKey:@"lng"]);
+            NSLog(@"%@", [poi objectForKey:@"name"]);
+            NSLog(@"%@", [poi objectForKey:@"vicinity"]);
+
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            CLLocationCoordinate2D coordinate;
+            coordinate.latitude = ((NSNumber *)[poi objectForKey:@"lat"]).doubleValue;
+            coordinate.longitude = ((NSNumber *)[poi objectForKey:@"lng"]).doubleValue;
+            
+            [annotation setCoordinate:coordinate];
+            [annotation setTitle: [poi objectForKey:@"name"]]; //You can set the subtitle too
+            [self.mapView addAnnotation:annotation];
+        }
+        [self.tableView reloadData];
+        
+    } failure:nil];
     
+    NSLog(@"start!");
+    [operation start];
+    NSLog(@"end!");
 
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {
