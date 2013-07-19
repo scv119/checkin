@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CIAppDelegate : UIResponder <UIApplicationDelegate>
+@interface CIAppDelegate : UIResponder <UIApplicationDelegate> {
+    NSMutableArray *feeds;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -11,21 +11,15 @@
 #import "CIFeedViewController.h"
 #import "CIViewController.h"
 
-@implementation CIAppDelegate {
-    NSMutableArray *feeds;
-}
-    
+@implementation CIAppDelegate    
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     feeds = [[NSMutableArray alloc] init];
     
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-    UINavigationController *navigationController = [[tabBarController viewControllers] objectAtIndex:0];
+    UINavigationController *navigationController =  (UINavigationController *)self.window.rootViewController;
     CIFeedViewController *feedViewController = [[navigationController viewControllers] objectAtIndex:0];
     
-    navigationController = [[tabBarController viewControllers] objectAtIndex:1];
-//    CIViewController *checkInController = [[navigationController viewControllers] objectAtIndex:0];
     feedViewController.feed = feeds;
     [feedViewController reloadFeed];
     return YES;

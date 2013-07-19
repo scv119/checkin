@@ -14,14 +14,35 @@
 
 @end
 
-@implementation CIViewController
+@implementation CIViewController {
+    CLLocationManager *locationManager;
+}
 
 - (void)viewDidLoad
-{    
-    pickerArray = [NSArray arrayWithObjects:@"心情很好",@"看到女神",@"我靠",@"球别说", nil]; 
-    self.pickView.delegate = self;
-    self.pickView.dataSource = self;
+{
     [super viewDidLoad];
+    self.mapView.showsUserLocation = TRUE;
+    
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    locationManager.distanceFilter = 10.0f;
+    [locationManager startUpdatingLocation];
+    NSLog(@"location start to update");
+
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    
+    CLLocation *location = [locations lastObject];
+    NSLog(@"location updated %@", [location description]);
+    MKCoordinateRegion region=MKCoordinateRegionMakeWithDistance(location.coordinate,1000 ,1000 );
+    [self.mapView setRegion:region animated:TRUE];
+    
+    NSString *url = @"https://maps.googleapis.com/maps/api/place/search/json?location=-33.8670522,151.1957362&rankby=distance&types=food&name=harbour&language=zh-CN&sensor=false&key=AIzaSyDLtz4_hWO-iGpy5RT8SxZi-YcZTZYTVXY";
+    
+    
 
 }
 
@@ -31,47 +52,34 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (NSInteger)numberOfComponentsInPickerView:
-(UIPickerView *)pickerView
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+	return 1;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView
-numberOfRowsInComponent:(NSInteger)component
+
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
 {
-    return [pickerArray count];
+	return 1;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView
-             titleForRow:(NSInteger)row
-            forComponent:(NSInteger)component
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [pickerArray objectAtIndex:row];
-}
-
--(IBAction)selectButton:(id)sender
-{
-    NSInteger idx = [self.pickView selectedRowInComponent:0];
-    NSString *message = [pickerArray objectAtIndex:idx];
-    NSLog(@"button clicked %@", message);
+    NSLog(@"invoked!");
+    static NSString *CellIdentifier = @"CheckInCell";
     
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://shenchen.mac:8888/"]];
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
-                                                            path:@"http://shenchen.mac:8888/"
-                                                      parameters:@{@"data":message}];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // Print the response body in text
-        NSLog(@"Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CIFeedShouldUpdate" object:nil userInfo:nil];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-    
-    [operation start];
-
+    UITableViewCell *cell = [tableView
+                             dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+        cell = [[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleDefault
+                reuseIdentifier:CellIdentifier];
+    }
+    return cell;
 }
 
 @end

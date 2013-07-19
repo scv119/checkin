@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface CIViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
-    NSArray *pickerArray;
+#import <MapKit/MapKit.h>
+
+@interface CIViewController : UIViewController <CLLocationManagerDelegate> {
+    NSArray *locationArray;
 }
 
--(IBAction)selectButton:(id)sender;
+-(IBAction)searchPlace:(id)sender;
 
-@property (nonatomic, strong) IBOutlet UIPickerView *pickView;
+@property (nonatomic, strong) IBOutlet MKMapView *mapView;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+
 @end

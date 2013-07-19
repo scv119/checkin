@@ -8,6 +8,7 @@
 
 #import "CIFeedViewController.h"
 #import "CIFeedItem.h"
+#import "CIViewController.h"
 #import "AFJSONRequestOperation.h"
 
 
@@ -17,11 +18,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemAdd) target:self action:@selector(checkinButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = item;
+    
     [[NSNotificationCenter defaultCenter] addObserverForName:@"CIFeedShouldUpdate" object:nil queue:nil usingBlock:^(NSNotification *note) {
         [self reloadFeed];
     }];
 }
 
+-(void)checkinButtonPressed:(id) sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    CIViewController *ci = [storyboard instantiateViewControllerWithIdentifier:@"CIViewController"];
+    [self.navigationController pushViewController:ci animated:YES];
+}
 
 -(void) reloadFeed
 {
