@@ -20,8 +20,11 @@
 
 - (void)viewDidLoad
 {
+    
+    self.tableView.delegate = self;
     [super viewDidLoad];
     self.mapView.showsUserLocation = TRUE;
+    cellContent = [[NSMutableArray alloc] init];
     
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -35,7 +38,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     
-    CLLocation *location = [locations lastObject];
+    CLLocation *location = [locationManager location];
     NSLog(@"location updated %@", [location description]);
     [self nearbyWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
     MKCoordinateRegion region=MKCoordinateRegionMakeWithDistance(location.coordinate,1000 ,1000 );
@@ -45,7 +48,7 @@
 
 -(void) nearbyWithLatitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees) lng
 {
-    NSString *str = [[NSString alloc] initWithFormat:@"http://10.18.93.158:8888/nearby?lat=%f&lng=%f", lat, lng];\
+    NSString *str = [[NSString alloc] initWithFormat:@"http://124.205.11.211:8888/nearby?lat=%f&lng=%f", lat, lng];\
     NSLog(@"nearby start! %@", str);
     NSURL *url = [NSURL URLWithString:str];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -56,12 +59,14 @@
         NSArray *array = (NSArray *)JSON;
         int size = 0;
         for (id item in array) {
+            if (size ++ > 5)
+                break;
             NSDictionary *poi = (NSDictionary *)item;
-
-            NSLog(@"%@", [poi objectForKey:@"lat"]);
-            NSLog(@"%@", [poi objectForKey:@"lng"]);
-            NSLog(@"%@", [poi objectForKey:@"name"]);
-            NSLog(@"%@", [poi objectForKey:@"vicinity"]);
+            [cellContent addObject:poi];
+//            NSLog(@"%@", [poi objectForKey:@"lat"]);
+//            NSLog(@"%@", [poi objectForKey:@"lng"]);
+//            NSLog(@"%@", [poi objectForKey:@"name"]);
+//            NSLog(@"%@", [poi objectForKey:@"vicinity"]);
 
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
             CLLocationCoordinate2D coordinate;
@@ -72,6 +77,8 @@
             [annotation setTitle: [poi objectForKey:@"name"]]; //You can set the subtitle too
             [self.mapView addAnnotation:annotation];
         }
+        
+        NSLog(@"table View start to reload");
         [self.tableView reloadData];
         
     } failure:nil];
@@ -96,28 +103,41 @@
 	return 1;
 }
 
-
-
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-	return 1;
+     NSLog(@"table view loading!");
+	return [cellContent count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"invoked!");
+    NSLog(@"table view loading!");
     static NSString *CellIdentifier = @"CheckInCell";
+//    
+//    if (indexPath.row == 0)
+//        return [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
     UITableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
+    NSDictionary *item = [cellContent objectAtIndex:indexPath.row ];
+    cell.textLabel.text = [item valueForKey:@"name"];
+    cell.detailTextLabel.text = [item valueForKey:@"vicinity"];
+    if (cell == nil) {
         cell = [[UITableViewCell alloc]
                 initWithStyle:UITableViewCellStyleDefault
                 reuseIdentifier:CellIdentifier];
     }
+    NSLog(@"Cell: %@ %@", cell.textLabel.text, cell.detailTextLabel.text);
+    // Configure the cell...
     return cell;
+
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 10;
 }
 
 @end

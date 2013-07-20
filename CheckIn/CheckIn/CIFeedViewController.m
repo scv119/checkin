@@ -36,7 +36,7 @@
 
 -(void) reloadFeed
 {
-    NSURL *url = [NSURL URLWithString:@"http://shenchen.mac:8888"];
+    NSURL *url = [NSURL URLWithString:@"http://124.205.11.211:8888"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {

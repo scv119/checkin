@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 
 @interface CIViewController : UIViewController <CLLocationManagerDelegate, UITableViewDelegate> {
-    NSArray *cellContent;
+    NSMutableArray *cellContent;
 }
 
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
