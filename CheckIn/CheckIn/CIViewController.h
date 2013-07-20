@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface CIViewController : UIViewController <CLLocationManagerDelegate, UITableViewDelegate> {
+@interface CIViewController : UIViewController <CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource> {
     NSMutableArray *cellContent;
 }
 

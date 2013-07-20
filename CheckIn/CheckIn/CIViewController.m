@@ -20,9 +20,10 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     
     self.tableView.delegate = self;
-    [super viewDidLoad];
+    self.tableView.dataSource = self;
     self.mapView.showsUserLocation = TRUE;
     cellContent = [[NSMutableArray alloc] init];
     
@@ -48,7 +49,7 @@
 
 -(void) nearbyWithLatitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees) lng
 {
-    NSString *str = [[NSString alloc] initWithFormat:@"http://124.205.11.211:8888/nearby?lat=%f&lng=%f", lat, lng];\
+    NSString *str = [[NSString alloc] initWithFormat:@"http://124.205.11.211:8888/nearby?lat=%f&lng=%f&offset=0&limit=12", lat, lng];\
     NSLog(@"nearby start! %@", str);
     NSURL *url = [NSURL URLWithString:str];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -59,15 +60,13 @@
         NSArray *array = (NSArray *)JSON;
         int size = 0;
         for (id item in array) {
-            if (size ++ > 5)
-                break;
             NSDictionary *poi = (NSDictionary *)item;
             [cellContent addObject:poi];
 //            NSLog(@"%@", [poi objectForKey:@"lat"]);
 //            NSLog(@"%@", [poi objectForKey:@"lng"]);
 //            NSLog(@"%@", [poi objectForKey:@"name"]);
 //            NSLog(@"%@", [poi objectForKey:@"vicinity"]);
-
+            if (size ++ < 5) {
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
             CLLocationCoordinate2D coordinate;
             coordinate.latitude = ((NSNumber *)[poi objectForKey:@"lat"]).doubleValue;
@@ -76,6 +75,7 @@
             [annotation setCoordinate:coordinate];
             [annotation setTitle: [poi objectForKey:@"name"]]; //You can set the subtitle too
             [self.mapView addAnnotation:annotation];
+            }
         }
         
         NSLog(@"table View start to reload");
@@ -122,13 +122,14 @@
     UITableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:CellIdentifier];
     NSDictionary *item = [cellContent objectAtIndex:indexPath.row ];
-    cell.textLabel.text = [item valueForKey:@"name"];
-    cell.detailTextLabel.text = [item valueForKey:@"vicinity"];
+
     if (cell == nil) {
         cell = [[UITableViewCell alloc]
                 initWithStyle:UITableViewCellStyleDefault
                 reuseIdentifier:CellIdentifier];
     }
+    cell.textLabel.text = [item objectForKey:@"name"];
+    cell.detailTextLabel.text = [item objectForKey:@"vicinity"];
     NSLog(@"Cell: %@ %@", cell.textLabel.text, cell.detailTextLabel.text);
     // Configure the cell...
     return cell;
@@ -137,7 +138,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 10;
+    return 30;
 }
 
 @end
