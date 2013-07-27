@@ -12,5 +12,8 @@
 
 @property NSString *feeling;
 @property NSString *created;
+@property NSString *name;
+
+-(NSString *) getFormattedTime;
 
 @end

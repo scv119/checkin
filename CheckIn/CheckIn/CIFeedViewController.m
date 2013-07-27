@@ -10,6 +10,7 @@
 #import "CIFeedItem.h"
 #import "CIViewController.h"
 #import "AFJSONRequestOperation.h"
+#import "CIFeelingCell.h"
 
 
 @implementation CIFeedViewController
@@ -19,8 +20,18 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemAdd) target:self action:@selector(checkinButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = item;
+    if (refreshTableView == nil) {
+        refreshTableView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0,  0 - self.tableView.bounds.size.height, self.tableView.bounds.size.width,  self.tableView.bounds.size.height)];
+        refreshTableView.delegate = self;
+        [self.tableView addSubview:refreshTableView];
+        
+        [refreshTableView refreshLastUpdatedDate];
+    }
+    
+    [self.tableView setSeparatorStyle: UITableViewCellSeparatorStyleNone];
+    
+    UIBarButtonItem *btn  = [[UIBarButtonItem alloc] initWithTitle:@"签到" style:UIBarButtonItemStyleBordered target:self action:@selector(checkinButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = btn;
     
     [[NSNotificationCenter defaultCenter] addObserverForName:@"CIFeedShouldUpdate" object:nil queue:nil usingBlock:^(NSNotification *note) {
         [self reloadFeed];
@@ -43,19 +54,24 @@
         
         NSLog(@"Success!");
         NSArray *array = (NSArray *)JSON;
+        [self.feed removeAllObjects];
         for (id item in array) {
-            NSArray *feed = (NSArray *)item;
+            NSDictionary *feed = (NSDictionary *)item;
             
             CIFeedItem *displayItem = [[CIFeedItem alloc] init];
-            displayItem.feeling = feed[0];
-            displayItem.created = [NSString stringWithFormat:@"%d", (int)feed[1]];
+            displayItem.feeling = [feed objectForKey:@"data"];
+            displayItem.created =[feed objectForKey:@"created"];
+            displayItem.name = [feed objectForKey:@"name"];
+            NSLog(@"%@, %@, %@", [feed objectForKey:@"created"], displayItem.name, displayItem.created);
+
             [self.feed addObject:displayItem];
-            NSLog(@"%@", feed[0]);
-            NSLog(@"%@", feed[1]);
         }
         [self.tableView reloadData];
+        [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0];
         
-    } failure:nil];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0];
+    }];
     
     [operation start];
 }
@@ -79,25 +95,93 @@
     NSLog(@"invoked!");
     static NSString *CellIdentifier = @"CheckInCell";
     
-    UITableViewCell *cell = [tableView
+    CIFeelingCell *cell = nil;
+    
+    cell = (CIFeelingCell *)[tableView
                              dequeueReusableCellWithIdentifier:CellIdentifier];
-    CIFeedItem *item = [self.feed objectAtIndex:indexPath.row];
-    cell.textLabel.text = item.feeling;
-    cell.detailTextLabel.text = item.created;
+// ERROR happens
+    
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]
-                initWithStyle:UITableViewCellStyleDefault
-                reuseIdentifier:CellIdentifier];
+        cell = [[CIFeelingCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] ;
     }
+    
+    CIFeedItem *item = [self.feed objectAtIndex:indexPath.row];
+    cell.item = item;
+    
     NSLog(@"Cell: %@ %@", cell.textLabel.text, cell.detailTextLabel.text);
     // Configure the cell...
     return cell;
 }
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    [self reloadFeed];
-//}
+- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
+{    
+    return nil;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [CIFeelingCell heightForCellWithItem:[self.feed objectAtIndex:indexPath.row]];
+
+}
+
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+    
+    //  should be calling your tableviews data source model to reload
+    //  put here just for demo
+    _reloading = YES;
+    [self reloadFeed];
+    
+}
+
+- (void)doneLoadingTableViewData{
+    
+    //  model should call this when its done loading
+    _reloading = NO;
+    [refreshTableView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+    
+}
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    [refreshTableView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    
+    [refreshTableView egoRefreshScrollViewDidEndDragging:scrollView];
+    
+}
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    
+    [self reloadTableViewDataSource];
+   
+    
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    
+    return _reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+    return [NSDate date]; // should return date data source was last changed
+    
+}
+
 
 @end

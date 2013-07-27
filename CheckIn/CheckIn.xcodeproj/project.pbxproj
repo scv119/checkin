@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2316A51B17A10A3A009C787D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2316A51A17A10A3A009C787D /* QuartzCore.framework */; };
+		2316A51E17A10AE6009C787D /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2316A51D17A10AE6009C787D /* EGORefreshTableHeaderView.m */; };
+		2316A52117A1316F009C787D /* CIFeelingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2316A52017A1316E009C787D /* CIFeelingCell.m */; };
+		232E9BCE17A39C0B0065B0A4 /* checkin.png in Resources */ = {isa = PBXBuildFile; fileRef = 232E9BCD17A39C0B0065B0A4 /* checkin.png */; };
+		232E9BD117A3B2120065B0A4 /* CIEarth2Mars.m in Sources */ = {isa = PBXBuildFile; fileRef = 232E9BD017A3B2110065B0A4 /* CIEarth2Mars.m */; };
+		2344669F179FB24800BB65BB /* CIFeelingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2344669E179FB24800BB65BB /* CIFeelingViewController.m */; };
+		234466A6179FDA1700BB65BB /* profile-image-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 234466A4179FDA1700BB65BB /* profile-image-placeholder.png */; };
+		234466A7179FDA1700BB65BB /* profile-image-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 234466A5179FDA1700BB65BB /* profile-image-placeholder@2x.png */; };
 		238E263E17951B950013EF20 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238E263D17951B950013EF20 /* UIKit.framework */; };
 		238E264017951B950013EF20 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238E263F17951B950013EF20 /* Foundation.framework */; };
 		238E264217951B950013EF20 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238E264117951B950013EF20 /* CoreGraphics.framework */; };
@@ -34,6 +42,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2316A51A17A10A3A009C787D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2316A51C17A10AE6009C787D /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		2316A51D17A10AE6009C787D /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		2316A51F17A1316E009C787D /* CIFeelingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIFeelingCell.h; sourceTree = "<group>"; };
+		2316A52017A1316E009C787D /* CIFeelingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CIFeelingCell.m; sourceTree = "<group>"; };
+		232E9BCD17A39C0B0065B0A4 /* checkin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkin.png; path = ../../../../../Desktop/checkin.png; sourceTree = "<group>"; };
+		232E9BCF17A3B2110065B0A4 /* CIEarth2Mars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIEarth2Mars.h; sourceTree = "<group>"; };
+		232E9BD017A3B2110065B0A4 /* CIEarth2Mars.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CIEarth2Mars.m; sourceTree = "<group>"; };
+		2344669D179FB24800BB65BB /* CIFeelingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIFeelingViewController.h; sourceTree = "<group>"; };
+		2344669E179FB24800BB65BB /* CIFeelingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CIFeelingViewController.m; sourceTree = "<group>"; };
+		234466A4179FDA1700BB65BB /* profile-image-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-image-placeholder.png"; sourceTree = "<group>"; };
+		234466A5179FDA1700BB65BB /* profile-image-placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-image-placeholder@2x.png"; sourceTree = "<group>"; };
 		238E263A17951B950013EF20 /* CheckIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		238E263D17951B950013EF20 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		238E263F17951B950013EF20 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -82,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2316A51B17A10A3A009C787D /* QuartzCore.framework in Frameworks */,
 				238E268617967F2E0013EF20 /* MapKit.framework in Frameworks */,
 				238E268417967E740013EF20 /* CoreLocation.framework in Frameworks */,
 				238E263E17951B950013EF20 /* UIKit.framework in Frameworks */,
@@ -114,6 +135,7 @@
 		238E263C17951B950013EF20 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2316A51A17A10A3A009C787D /* QuartzCore.framework */,
 				238E268317967E740013EF20 /* CoreLocation.framework */,
 				238E268517967F2E0013EF20 /* MapKit.framework */,
 				238E263D17951B950013EF20 /* UIKit.framework */,
@@ -126,16 +148,24 @@
 		238E264317951B950013EF20 /* CheckIn */ = {
 			isa = PBXGroup;
 			children = (
+				238E264417951B950013EF20 /* Supporting Files */,
 				238E264C17951B950013EF20 /* CIAppDelegate.h */,
 				238E264D17951B950013EF20 /* CIAppDelegate.m */,
 				238E265517951B960013EF20 /* MainStoryboard.storyboard */,
 				238E2660179520F40013EF20 /* CIFeedViewController.h */,
+				238E2661179520F40013EF20 /* CIFeedViewController.m */,
+				2316A51F17A1316E009C787D /* CIFeelingCell.h */,
+				2316A52017A1316E009C787D /* CIFeelingCell.m */,
 				238E2663179521F90013EF20 /* CIFeedItem.h */,
 				238E2664179521F90013EF20 /* CIFeedItem.m */,
-				238E2661179520F40013EF20 /* CIFeedViewController.m */,
 				238E265817951B960013EF20 /* CIViewController.h */,
+				2316A51C17A10AE6009C787D /* EGORefreshTableHeaderView.h */,
+				2316A51D17A10AE6009C787D /* EGORefreshTableHeaderView.m */,
 				238E265917951B960013EF20 /* CIViewController.m */,
-				238E264417951B950013EF20 /* Supporting Files */,
+				2344669D179FB24800BB65BB /* CIFeelingViewController.h */,
+				2344669E179FB24800BB65BB /* CIFeelingViewController.m */,
+				232E9BCF17A3B2110065B0A4 /* CIEarth2Mars.h */,
+				232E9BD017A3B2110065B0A4 /* CIEarth2Mars.m */,
 			);
 			path = CheckIn;
 			sourceTree = "<group>";
@@ -143,6 +173,9 @@
 		238E264417951B950013EF20 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				232E9BCD17A39C0B0065B0A4 /* checkin.png */,
+				234466A4179FDA1700BB65BB /* profile-image-placeholder.png */,
+				234466A5179FDA1700BB65BB /* profile-image-placeholder@2x.png */,
 				238E264517951B950013EF20 /* CheckIn-Info.plist */,
 				238E264617951B950013EF20 /* InfoPlist.strings */,
 				238E264917951B950013EF20 /* main.m */,
@@ -237,6 +270,9 @@
 				238E265217951B960013EF20 /* Default@2x.png in Resources */,
 				238E265417951B960013EF20 /* Default-568h@2x.png in Resources */,
 				238E265717951B960013EF20 /* MainStoryboard.storyboard in Resources */,
+				234466A6179FDA1700BB65BB /* profile-image-placeholder.png in Resources */,
+				234466A7179FDA1700BB65BB /* profile-image-placeholder@2x.png in Resources */,
+				232E9BCE17A39C0B0065B0A4 /* checkin.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +297,10 @@
 				238E2680179530070013EF20 /* AFURLConnectionOperation.m in Sources */,
 				238E2681179530070013EF20 /* AFXMLRequestOperation.m in Sources */,
 				238E2682179530070013EF20 /* UIImageView+AFNetworking.m in Sources */,
+				2344669F179FB24800BB65BB /* CIFeelingViewController.m in Sources */,
+				2316A51E17A10AE6009C787D /* EGORefreshTableHeaderView.m in Sources */,
+				2316A52117A1316F009C787D /* CIFeelingCell.m in Sources */,
+				232E9BD117A3B2120065B0A4 /* CIEarth2Mars.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

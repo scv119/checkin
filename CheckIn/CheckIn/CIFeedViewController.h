@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EGORefreshTableHeaderView.h"
 
-@interface CIFeedViewController : UITableViewController
+@interface CIFeedViewController : UITableViewController<EGORefreshTableHeaderDelegate> {
+    EGORefreshTableHeaderView *refreshTableView;
+    BOOL _reloading;
+}
 
 @property  (nonatomic, strong) NSMutableArray *feed;
 
