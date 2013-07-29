@@ -8,10 +8,11 @@
 
 #import "CIFeelingCell.h"
 
-@implementation CIFeelingCell
+@implementation CIFeelingCell {
+    UILabel *atLabel;
+}
 
 @synthesize item = _item;
-
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -41,8 +42,8 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
+    [atLabel setHighlighted:TRUE];
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
@@ -59,7 +60,7 @@
     
     self.textLabel.font = [UIFont boldSystemFontOfSize:15];
     self.imageView.frame = CGRectMake(10.0f, 10.0f, 20.0f, 20.0f);
-    UILabel *atLabel = [[UILabel alloc] init];
+    atLabel = [[UILabel alloc] init];
     atLabel.frame = CGRectMake(40, 10, 18, 20);
     atLabel.text = @"在";
     atLabel.font = [UIFont systemFontOfSize:13];
@@ -71,7 +72,7 @@
     detailTextLabelFrame.size.height = [[self class] heightForCellWithItem:_item] - 45.0f;
     self.detailTextLabel.frame = detailTextLabelFrame;
     
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.selectionStyle = UITableViewCellSelectionStyleGray;
     
 }
 

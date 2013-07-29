@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
 @interface CIFeedItem : NSObject
 
 @property NSString *feeling;
 @property NSString *created;
 @property NSString *name;
+@property CLLocation *location;
 
 -(NSString *) getFormattedTime;
 

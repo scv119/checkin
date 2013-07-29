@@ -7,6 +7,7 @@
 //
 
 #import "CIFeedViewController.h"
+#import "CILocationDetailViewController.h"
 #import "CIFeedItem.h"
 #import "CIViewController.h"
 #import "AFJSONRequestOperation.h"
@@ -29,6 +30,7 @@
     }
     
     [self.tableView setSeparatorStyle: UITableViewCellSeparatorStyleNone];
+    self.tableView.delegate = self;
     
     UIBarButtonItem *btn  = [[UIBarButtonItem alloc] initWithTitle:@"签到" style:UIBarButtonItemStyleBordered target:self action:@selector(checkinButtonPressed:)];
     self.navigationItem.rightBarButtonItem = btn;
@@ -62,6 +64,7 @@
             displayItem.feeling = [feed objectForKey:@"data"];
             displayItem.created =[feed objectForKey:@"created"];
             displayItem.name = [feed objectForKey:@"name"];
+            displayItem.location = [[CLLocation alloc] initWithLatitude:[[feed objectForKey:@"lat"] floatValue] longitude:[[feed objectForKey:@"lng"] floatValue] ];
             NSLog(@"%@, %@, %@", [feed objectForKey:@"created"], displayItem.name, displayItem.created);
 
             [self.feed addObject:displayItem];
@@ -109,14 +112,11 @@
     cell.item = item;
     
     NSLog(@"Cell: %@ %@", cell.textLabel.text, cell.detailTextLabel.text);
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     // Configure the cell...
     return cell;
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)path
-{    
-    return nil;
-}
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,6 +124,19 @@
     return [CIFeelingCell heightForCellWithItem:[self.feed objectAtIndex:indexPath.row]];
 
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"selected!");
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    CILocationDetailViewController *ci = [storyboard instantiateViewControllerWithIdentifier:@"CILocationDetailViewController"];
+    CIFeedItem *item = [self.feed objectAtIndex:indexPath.row];
+    [ci setLocation:item.location withName:item.name withVicinity:@""];
+    [self.navigationController pushViewController:ci animated:YES];
+    
+}
+
 
 
 #pragma mark -
@@ -160,6 +173,8 @@
     [refreshTableView egoRefreshScrollViewDidEndDragging:scrollView];
     
 }
+
+
 
 #pragma mark -
 #pragma mark EGORefreshTableHeaderDelegate Methods

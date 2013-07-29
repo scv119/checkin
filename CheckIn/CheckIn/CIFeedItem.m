@@ -10,17 +10,13 @@
 
 @implementation CIFeedItem
 
-@synthesize feeling;
-@synthesize created;
-@synthesize name;
-
 
 -(NSString *) getFormattedTime
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[created doubleValue]];
+    NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[self.created doubleValue]];
     return [dateFormatter stringFromDate:date];
 }
 

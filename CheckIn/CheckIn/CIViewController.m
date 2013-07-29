@@ -20,7 +20,6 @@
     CLLocationManager *locationManager;
     
     UIView *tableHeadView;
-    MKMapView *mapView;
     UISearchBar *searchBar;
     UIFont *lableFont;
     UIFont *detailFont;
@@ -41,10 +40,11 @@
     tableHeadView = [[UIView alloc] initWithFrame:CGRectMake(0, 160, windowRec.size.width, 260)];
     
     searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, windowRec.size.width, 44)];
-    mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 44,windowRec.size.width, 200)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 44,windowRec.size.width, 200)];
+    self.mapView.delegate = self;
     ac.frame = CGRectMake(0, 244, windowRec.size.width , 50);
     [tableHeadView addSubview:searchBar];
-    [tableHeadView addSubview:mapView];
+    [tableHeadView addSubview:self.mapView];
     [tableHeadView addSubview:ac];
     //[view addSubview:ac];
     self.tableView.tableHeaderView = tableHeadView;
@@ -53,7 +53,7 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    mapView.showsUserLocation = TRUE;
+    self.mapView.showsUserLocation = TRUE;
     cellContent = [[NSMutableArray alloc] init];
     searchResult = [[NSMutableArray alloc] init];
     self.currentArray = cellContent;
@@ -73,6 +73,9 @@
     
     searchAc = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     searchAc.frame = CGRectMake(0, 0, windowRec.size.width, windowRec.size.height / 3);
+    
+    [locationManager startUpdatingLocation];
+
 
 
 }
@@ -82,7 +85,6 @@
     
     [super viewDidLoad];
     
-    [locationManager startUpdatingLocation];
     NSLog(@"location start to update");
 
 }
@@ -96,9 +98,22 @@
     
     [self nearbyWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
     MKCoordinateRegion region=MKCoordinateRegionMakeWithDistance(location.coordinate,1000 ,1000 );
-    [mapView setRegion:region animated:TRUE];
+    [self.mapView setRegion:region animated:NO];
     
 }
+
+
+//- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+//{
+//    CLLocation *location = userLocation.location;
+////    location = [CIEarth2Mars earth2mars:location];
+//    NSLog(@"location updated %@", [location description]);
+//    
+//    [self nearbyWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+//    MKCoordinateRegion region=MKCoordinateRegionMakeWithDistance(location.coordinate,1000 ,1000 );
+//    [self.mapView setRegion:region animated:TRUE];
+//}
+
 
 -(void) nearbyWithLatitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees) lng
 {
@@ -124,7 +139,7 @@
             
             [annotation setCoordinate:coordinate];
             [annotation setTitle: [poi objectForKey:@"name"]]; //You can set the subtitle too
-            [mapView addAnnotation:annotation];
+            [self.mapView addAnnotation:annotation];
             }
         }
         
@@ -287,7 +302,6 @@
     ci.poi = [self.currentArray objectAtIndex: indexPath.row];
     [self.navigationController pushViewController:ci animated:YES];
     
-
 }
 
 

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface CIViewController : UIViewController <CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate> {
+@interface CIViewController : UIViewController <CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate, MKMapViewDelegate> {
     NSMutableArray *cellContent;
     NSMutableArray *searchResult;
 }
@@ -19,6 +19,8 @@
 @property (nonatomic, weak) NSMutableArray *currentArray;
 
 @property (atomic) int currentRequestId;
+
+@property (nonatomic, strong) MKMapView *mapView;
 
 -(void) nearbyWithLatitude:(CLLocationDegrees)lat longitude:(CLLocationDegrees) lng;
 

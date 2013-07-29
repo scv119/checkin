@@ -12,6 +12,7 @@
 		2316A52117A1316F009C787D /* CIFeelingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2316A52017A1316E009C787D /* CIFeelingCell.m */; };
 		232E9BCE17A39C0B0065B0A4 /* checkin.png in Resources */ = {isa = PBXBuildFile; fileRef = 232E9BCD17A39C0B0065B0A4 /* checkin.png */; };
 		232E9BD117A3B2120065B0A4 /* CIEarth2Mars.m in Sources */ = {isa = PBXBuildFile; fileRef = 232E9BD017A3B2110065B0A4 /* CIEarth2Mars.m */; };
+		232E9BD417A3C1B70065B0A4 /* CILocationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232E9BD317A3C1B60065B0A4 /* CILocationDetailViewController.m */; };
 		2344669F179FB24800BB65BB /* CIFeelingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2344669E179FB24800BB65BB /* CIFeelingViewController.m */; };
 		234466A6179FDA1700BB65BB /* profile-image-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 234466A4179FDA1700BB65BB /* profile-image-placeholder.png */; };
 		234466A7179FDA1700BB65BB /* profile-image-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 234466A5179FDA1700BB65BB /* profile-image-placeholder@2x.png */; };
@@ -50,6 +51,8 @@
 		232E9BCD17A39C0B0065B0A4 /* checkin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkin.png; path = ../../../../../Desktop/checkin.png; sourceTree = "<group>"; };
 		232E9BCF17A3B2110065B0A4 /* CIEarth2Mars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIEarth2Mars.h; sourceTree = "<group>"; };
 		232E9BD017A3B2110065B0A4 /* CIEarth2Mars.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CIEarth2Mars.m; sourceTree = "<group>"; };
+		232E9BD217A3C1B60065B0A4 /* CILocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CILocationDetailViewController.h; sourceTree = "<group>"; };
+		232E9BD317A3C1B60065B0A4 /* CILocationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CILocationDetailViewController.m; sourceTree = "<group>"; };
 		2344669D179FB24800BB65BB /* CIFeelingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIFeelingViewController.h; sourceTree = "<group>"; };
 		2344669E179FB24800BB65BB /* CIFeelingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CIFeelingViewController.m; sourceTree = "<group>"; };
 		234466A4179FDA1700BB65BB /* profile-image-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-image-placeholder.png"; sourceTree = "<group>"; };
@@ -166,6 +169,8 @@
 				2344669E179FB24800BB65BB /* CIFeelingViewController.m */,
 				232E9BCF17A3B2110065B0A4 /* CIEarth2Mars.h */,
 				232E9BD017A3B2110065B0A4 /* CIEarth2Mars.m */,
+				232E9BD217A3C1B60065B0A4 /* CILocationDetailViewController.h */,
+				232E9BD317A3C1B60065B0A4 /* CILocationDetailViewController.m */,
 			);
 			path = CheckIn;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 				2316A51E17A10AE6009C787D /* EGORefreshTableHeaderView.m in Sources */,
 				2316A52117A1316F009C787D /* CIFeelingCell.m in Sources */,
 				232E9BD117A3B2120065B0A4 /* CIEarth2Mars.m in Sources */,
+				232E9BD417A3C1B70065B0A4 /* CILocationDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
